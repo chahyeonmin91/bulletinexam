@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: bulletinexam
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/dbdocker
+    password: bimilbunho7!
+    username: chadocker
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 80

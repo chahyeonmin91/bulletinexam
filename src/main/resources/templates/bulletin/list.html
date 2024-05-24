@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 목록</title>
+    <link rel="stylesheet" th:href="@{/css/bulletin.css}">
+</head>
+<body>
+<h1>게시글 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>이름</th>
+        <th>등록일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.id}">1</td>
+        <td><a th:href="@{/view(id=${post.id})}" th:text="${post.title}">Sample Title</a></td>
+        <td th:text="${post.name}">Sample Name</td>
+        <td th:text="${#dates.format(post.createdAt, 'yyyy/MM/dd')}">2024/05/24</td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{/writeform}">글 작성</a>
+</div>
+</body>
+</html>
