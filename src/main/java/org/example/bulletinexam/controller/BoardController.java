@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bulletinexam.domain.Board;
 import org.example.bulletinexam.domain.BoardDTO;
 import org.example.bulletinexam.service.BoardService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,12 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String listBoards(Model model) {
-        Iterable<Board> posts = boardService.findAllBoards();
+    public String listBoards(@RequestParam(defaultValue = "1") int page, Model model) {
+        int pageSize = 5;
+        Page<Board> boardPage = boardService.findAllBoards(page, pageSize);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
-        List<BoardDTO> boardDTOs = ((List<Board>) posts).stream()
+        List<BoardDTO> boardDTOs = boardPage.getContent().stream()
                 .map(board -> new BoardDTO(
                         board.getId(),
                         board.getName(),
@@ -33,6 +35,8 @@ public class BoardController {
                 .collect(Collectors.toList());
 
         model.addAttribute("boards", boardDTOs);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", boardPage.getTotalPages());
         return "list";
     }
 
@@ -77,6 +81,7 @@ public class BoardController {
         boardService.deleteBoard(id, password);
         return "redirect:/list";
     }
+
     @GetMapping("/deleteform")
     public String deleteForm(@RequestParam Long id, Model model) {
         model.addAttribute("id", id);

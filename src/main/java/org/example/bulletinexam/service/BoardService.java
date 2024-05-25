@@ -5,13 +5,9 @@ import org.example.bulletinexam.domain.Board;
 import org.example.bulletinexam.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Pageable;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -19,10 +15,9 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public List<Board> findAllBoards() {
-        Iterable<Board> boards = boardRepository.findAll();
-        return StreamSupport.stream(boards.spliterator(), false)
-                .collect(Collectors.toList());
+    public Page<Board> findAllBoards(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return boardRepository.findAll(pageable);
     }
 
     public Board findBoardById(Long id) {
@@ -43,7 +38,4 @@ public class BoardService {
             boardRepository.deleteById(id);
         }
     }
-
-
-
 }
