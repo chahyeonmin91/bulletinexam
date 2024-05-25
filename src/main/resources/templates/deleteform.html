@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>글 삭제</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">글 삭제</h1>
+    <form th:action="@{/delete}" method="post">
+        <input type="hidden" name="id" th:value="${id}" />
+        <div class="form-group">
+            <label for="password">암호:</label>
+            <input type="password" id="password" name="password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-danger">삭제</button>
+        <a th:href="@{/list}" class="btn btn-secondary">목록으로</a>
+    </form>
+</div>
+</body>
+</html>

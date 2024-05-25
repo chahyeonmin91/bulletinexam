@@ -3,21 +3,26 @@ package org.example.bulletinexam.service;
 import lombok.RequiredArgsConstructor;
 import org.example.bulletinexam.domain.Board;
 import org.example.bulletinexam.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
-    public List<Board> findBoards(int page, int pageSize) {
-        int offset = page * pageSize;
-        return boardRepository.findLatestBoards(offset, pageSize);
+    public List<Board> findAllBoards() {
+        Iterable<Board> boards = boardRepository.findAll();
+        return StreamSupport.stream(boards.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public Board findBoardById(Long id) {

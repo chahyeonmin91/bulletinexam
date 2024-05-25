@@ -5,24 +5,20 @@ body {
 
 h1 {
     color: #333;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+.table {
+    margin-bottom: 20px;
 }
 
-th, td {
-    padding: 8px;
+.table th, .table td {
     text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-th {
+.table th {
     background-color: #f4f4f4;
 }
 
@@ -35,13 +31,13 @@ a:hover {
     text-decoration: underline;
 }
 
-form div {
-    margin-bottom: 10px;
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
-    display: block;
     margin-bottom: 5px;
+    display: block;
 }
 
 input, textarea {
